@@ -28,7 +28,7 @@ const jwt = new JWT({
 });
 
 function parseMarks(marks: string): [number, number] {
-    const [achieved, total] = marks.split(' / ').map(Number);
+    const [achieved, total] = marks?.split(' / ').map(Number);
     return [achieved, total];
 }
 
