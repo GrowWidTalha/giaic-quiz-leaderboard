@@ -43,7 +43,7 @@ export default function TopTenBoard({ topTenPlayers }: { topTenPlayers: TopTenI[
       <CardContent className="mt-3">
         <div className="grid gap-4">
           {topTenPlayers.map((player, index) => (
-            <div key={index} onClick={() => router.push(`/s/${player.email}`)}  className="grid grid-cols-[auto,1fr,1fr,auto] items-center gap-4"> {/* Add a key prop */}
+            <div key={index} onClick={() => router.push(`/s/${player.email}`)}  className="cursor-pointer grid grid-cols-[auto,1fr,1fr,auto] items-center gap-4"> {/* Add a key prop */}
               <div className="bg-primary text-primary-foreground rounded-full px-3 py-1 font-medium">
                 {index + 1}
               </div>
