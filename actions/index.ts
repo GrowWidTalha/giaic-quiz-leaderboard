@@ -26,9 +26,19 @@ const jwt = new JWT({
     key: process.env.GSHEETS_PRIVATE_KEY?.replace(/\\n/g, '\n'),
     scopes: ['https://www.googleapis.com/auth/spreadsheets'],
 });
+function parseMarks(marks: string | undefined | null): [number, number] {
+    if (!marks || typeof marks !== 'string') {
+        return [0, 0];
+    }
 
-function parseMarks(marks: string): [number, number] {
-    const [achieved, total] = marks?.split(' / ').map(Number);
+    const [achievedStr, totalStr] = marks.split(' / ');
+    const achieved = Number(achievedStr);
+    const total = Number(totalStr);
+
+    if (isNaN(achieved) || isNaN(total)) {
+        return [0, 0];
+    }
+
     return [achieved, total];
 }
 
