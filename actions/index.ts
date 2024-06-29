@@ -2,7 +2,6 @@
 
 import { GoogleSpreadsheet } from "google-spreadsheet";
 import { JWT } from 'google-auth-library';
-import googleAuth from "@/credientials.json";
 import { sheetConfigs } from "@/sheetConfig";
 
 interface QuizResponse {
