@@ -1,7 +1,7 @@
 export const sheetConfigs = [
     {
         key: "1TJlyGK_LGAPcK7b3tQsKv7GYIc5LVE_tmm7ga4hmyOM",
-        name: "Name",
+        name: "Name:",
         score: "Score",
         email: "Email Address",
         totalMarks: 20,
