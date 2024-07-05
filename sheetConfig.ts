@@ -3,9 +3,9 @@ export const sheetConfigs = [
         key: "1M_o0A3TIcF3WZ3M1nCv4xEpasXIZL9AgnRfHSu8fxKU",
         name: "Name:",
         score: "Score",
-        email: "Email Address",
+        email: "Email address",
         totalMarks: 20,
-        quizName: "Class 11",
+        quizName: "Class-11",
     },
         {
         key: "1-O2OWOL0KJS5gpH5gDwagv0tCbDYWFBs7ByrxozNhgw",
@@ -13,7 +13,7 @@ export const sheetConfigs = [
         score: "Score",
         email: "Email Address",
         totalMarks: 20,
-        quizName: "Class 10",
+        quizName: "Class-10",
     },
     {
         key: "1TJlyGK_LGAPcK7b3tQsKv7GYIc5LVE_tmm7ga4hmyOM",
@@ -21,7 +21,7 @@ export const sheetConfigs = [
         score: "Score",
         email: "Email Address",
         totalMarks: 20,
-        quizName: "Class 09",
+        quizName: "Class-09",
     },
     {
         key: "1fmN5xMAUjIhysA63xNCDgMZN9eOoVo0Pyg2D2Vvh2nE",
@@ -29,7 +29,7 @@ export const sheetConfigs = [
         score: "Score",
         email: "Email address",
         totalMarks: 20,
-        quizName: "Class 08",
+        quizName: "Class-08",
     },
     {
         // fasih
@@ -38,11 +38,11 @@ export const sheetConfigs = [
         score: "Score",
         email: "Email Address",
         totalMarks: 20,
-        quizName: "Class 05"
+        quizName: "Class-05"
     },
     {
         key: "1RR6YRDSNNQbWRaLB5zULMfLqE_SAnIqH5iMez7xTWXM",
-        quizName: "Class 04",
+        quizName: "Class-04",
         name: "Name",
         email: "Email Address",
         totalMarks: 20,
@@ -60,7 +60,7 @@ export const sheetConfigs = [
     // khalid Ghan
     {
         // noor
-        quizName: "Class 02",
+        quizName: "Class-02",
         email: "Email Address",
         name: "Name",
         score: "Score",
@@ -69,7 +69,7 @@ export const sheetConfigs = [
     },
     {
         // huzair
-        quizName: "Class 01",
+        quizName: "Class-01",
         email: "Email Address",
         name: "Name",
         score: "Score",
