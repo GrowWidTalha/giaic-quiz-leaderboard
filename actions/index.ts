@@ -1,152 +1,181 @@
+// actions/fetchQuizResponses.js
 "use server";
 
 import { GoogleSpreadsheet } from "google-spreadsheet";
-import { JWT } from 'google-auth-library';
+import { JWT } from "google-auth-library";
+import cache from "@/cache"; // Adjust the path if needed
 import { sheetConfigs } from "@/sheetConfig";
 
 interface QuizResponse {
-    email: string;
-    name: string;
-    marks: number;
-    totalMarks: number;
-    quizName: string;
+  email: string;
+  name: string;
+  marks: number;
+  totalMarks: number;
+  quizName: string;
 }
 
 interface AggregatedResponses {
-    [email: string]: {
-        name: string;
-        quizzes: { quizName: string; marks: number; totalMarks: number }[];
-    };
+  [email: string]: {
+    name: string;
+    quizzes: { quizName: string; marks: number; totalMarks: number }[];
+  };
 }
-
-
 
 const jwt = new JWT({
-    email: process.env.CLIENT_EMAIL,
-    key: process.env.GSHEETS_PRIVATE_KEY?.replace(/\\n/g, '\n'),
-    scopes: ['https://www.googleapis.com/auth/spreadsheets'],
+  email: process.env.CLIENT_EMAIL,
+  key: process.env.GSHEETS_PRIVATE_KEY?.replace(/\\n/g, "\n"),
+  scopes: ["https://www.googleapis.com/auth/spreadsheets"],
 });
+
 function parseMarks(marks: string | undefined | null): [number, number] {
-    if (!marks || typeof marks !== 'string') {
-        return [0, 0];
-    }
+  if (!marks || typeof marks !== "string") {
+    return [0, 0];
+  }
 
-    const [achievedStr, totalStr] = marks.split(' / ');
-    const achieved = Number(achievedStr);
-    const total = Number(totalStr);
+  const [achievedStr, totalStr] = marks.split(" / ");
+  const achieved = Number(achievedStr);
+  const total = Number(totalStr);
 
-    if (isNaN(achieved) || isNaN(total)) {
-        return [0, 0];
-    }
+  if (isNaN(achieved) || isNaN(total)) {
+    return [0, 0];
+  }
 
-    return [achieved, total];
+  return [achieved, total];
 }
 
-async function fetchQuizResponses(sheetConfig: { key: string, name: string, score: string, email: string, totalMarks: number }, quizName: string): Promise<QuizResponse[]> {
-    try {
-        const doc = new GoogleSpreadsheet(sheetConfig.key, jwt);
-        // await doc.useServiceAccountAuth(jwt); // Corrected method for JWT authentication
-        await doc.loadInfo();
-        const sheet = doc.sheetsByIndex[0]; // Assuming data is in the first sheet
-        const rows = await sheet.getRows();
+async function fetchQuizResponses(
+  sheetConfig: {
+    key: string;
+    name: string;
+    score: string;
+    email: string;
+    totalMarks: number;
+  },
+  quizName: string
+): Promise<QuizResponse[]> {
+  const cacheKey = `google-sheet-data-${quizName}`;
+  const cachedData = cache.get(cacheKey);
 
-        return rows.map((row) => {
-            const [achieved, total] = parseMarks(row.get(sheetConfig.score)); // Corrected method to access row data
-            return {
-                email: row.get(sheetConfig.email), // Corrected method to access row data
-                name: row.get(sheetConfig.name) ? row.get(sheetConfig.name) : "name undefined", // Corrected method to access row data
-                marks: achieved,
-                totalMarks: total,  
-                quizName: quizName,
-            };
-        });
-    } catch (error: any) {
-        throw new Error(error.message);
-    }
+  if (cachedData) {
+    console.log(cacheKey, cachedData);
+    return cachedData;
+  }
+
+  try {
+    const doc = new GoogleSpreadsheet(sheetConfig.key, jwt);
+    await doc.loadInfo();
+    const sheet = doc.sheetsByIndex[0];
+    const rows = await sheet.getRows();
+
+    const quizResponses = rows.map((row) => {
+      const [achieved, total] = parseMarks(row.get(sheetConfig.score));
+      return {
+        email: row.get(sheetConfig.email),
+        name: row.get(sheetConfig.name) || "name undefined",
+        marks: achieved,
+        totalMarks: total,
+        quizName: quizName,
+      };
+    });
+
+    cache.set(cacheKey, quizResponses);
+    return quizResponses;
+  } catch (error: any) {
+    throw new Error(error.message);
+  }
+}
+
+interface QuizResponse {
+  email: string;
+  name: string;
+  marks: number;
+  totalMarks: number;
+  quizName: string;
 }
 
 export const aggregateResponses = async () => {
-    const aggregatedResponses: AggregatedResponses = {};
+  const cacheKey = "aggregated-responses";
+  const cachedData = cache.get(cacheKey);
 
-    for (const config of sheetConfigs) {
-        const responses = await fetchQuizResponses(config, config.quizName);
+  if (cachedData) {
+    console.log("shipping cached data");
+    return cachedData;
+  }
+  const aggregatedResponses: AggregatedResponses = {};
 
-        responses.forEach((response) => {
-            if (!aggregatedResponses[response.email]) {
-                aggregatedResponses[response.email] = {
-                    name: response.name,
-                    quizzes: [],
-                };
-            }
+  for (const config of sheetConfigs) {
+    const responses = await fetchQuizResponses(config, config.quizName);
 
-            const existingQuiz = aggregatedResponses[response.email].quizzes.find(q => q.quizName === response.quizName);
+    responses.forEach((response) => {
+      if (!aggregatedResponses[response.email]) {
+        aggregatedResponses[response.email] = {
+          name: response.name,
+          quizzes: [],
+        };
+      }
 
-            if (!existingQuiz) {
-                aggregatedResponses[response.email].quizzes.push({
-                    quizName: response.quizName,
-                    marks: response.marks,
-                    totalMarks: response.totalMarks,
-                });
-            }
+      const existingQuiz = aggregatedResponses[response.email].quizzes.find(
+        (q) => q.quizName === response.quizName
+      );
+
+      if (!existingQuiz) {
+        aggregatedResponses[response.email].quizzes.push({
+          quizName: response.quizName,
+          marks: response.marks,
+          totalMarks: response.totalMarks,
         });
-    }
-
-    return aggregatedResponses;
-}
+      }
+    });
+  }
+  cache.set(cacheKey, aggregatedResponses);
+  return aggregatedResponses;
+};
 
 // Utility functions
-// Function to calculate the percentage for a single user's quizzes
-const getSinglePercentage = (quizzes: { quizName: string; marks: number; totalMarks: number }[]) => {
-    let totalAchieved = 0;
-    let totalPossible = 0;
+const getSinglePercentage = (
+  quizzes: { quizName: string; marks: number; totalMarks: number }[]
+) => {
+  let totalAchieved = 0;
+  let totalPossible = 0;
 
-    quizzes.forEach(quiz => {
-        totalAchieved += quiz.marks;
-        totalPossible += quiz.totalMarks;
-    });
+  quizzes.forEach((quiz) => {
+    totalAchieved += quiz.marks;
+    totalPossible += quiz.totalMarks;
+  });
 
-    if (totalPossible === 0) return 0; // Handle case where totalPossible is zero to avoid division by zero
+  if (totalPossible === 0) return 0;
 
-    const basePercentage = (totalAchieved / totalPossible) * 100;
+  const basePercentage = (totalAchieved / totalPossible) * 100;
 
-    // Apply a factor based on the number of quizzes attempted
-    const attemptFactor = quizzes.length / sheetConfigs.length;
+  const attemptFactor = quizzes.length / sheetConfigs.length;
 
-    // Calculate final percentage incorporating the attempt factor
-    const finalPercentage = basePercentage * attemptFactor;
+  const finalPercentage = basePercentage * attemptFactor;
 
-    return parseInt(finalPercentage.toFixed());
+  return parseInt(finalPercentage.toFixed());
 };
 
-// Function to calculate the percentages for all users with more weight for more quizzes attempted
-export const calculatePercentages = (aggregatedResponses: AggregatedResponses) => {
-    const percentages: { email: string; name: string; percentage: number }[] = [];
+export const calculatePercentages = (
+  aggregatedResponses: AggregatedResponses
+) => {
+  const percentages: { email: string; name: string; percentage: number }[] = [];
 
-    for (const email in aggregatedResponses) {
-        const user = aggregatedResponses[email];
-        
-        // Calculate the base percentage using the getSinglePercentage function
-        const basePercentage = getSinglePercentage(user.quizzes);
+  for (const email in aggregatedResponses) {
+    const user = aggregatedResponses[email];
 
-        // Apply a logarithmic scaling to the number of quizzes attempted
-        
-        percentages.push({ email, name: user.name, percentage: basePercentage });
-    }
+    const basePercentage = getSinglePercentage(user.quizzes);
 
-    return percentages;
+    percentages.push({ email, name: user.name, percentage: basePercentage });
+  }
+
+  return percentages;
 };
 
-
-export const getTopTen = (percentages: { email: string; name: string; percentage: number }[]) => {
-    let perc =  percentages.sort((a, b) => b.percentage - a.percentage).slice(0, 10)
-    console.log(perc);
-    
-    return perc;
+export const getTopTen = (
+  percentages: { email: string; name: string; percentage: number }[]
+) => {
+  return percentages.sort((a, b) => b.percentage - a.percentage).slice(0, 10);
 };
 
 export const getUserDataByEmail = (aggregatedResponses: any, email: string) => {
-    return aggregatedResponses[email] || null;
+  return aggregatedResponses[email] || null;
 };
-
-// Call aggregateResponses for testing purposes
-// aggregateResponses().catch(console.error);
