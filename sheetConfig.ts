@@ -16,6 +16,14 @@ export const sheetConfigs = [
         quizName: "Class-17",
     },
           {
+        key: "1ETp4Y2LeXYl0YQeYBLjv8t4EuG-ZgFDgxQaFhH8M0Zw",
+        name: "Name",
+        score: "Score",
+        email: "Email Address",
+        totalMarks: 20,
+        quizName: "Class-12",
+    },
+          {
         key: "1M_o0A3TIcF3WZ3M1nCv4xEpasXIZL9AgnRfHSu8fxKU",
         name: "Name:",
         score: "Score",
