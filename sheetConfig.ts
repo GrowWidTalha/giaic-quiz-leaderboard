@@ -1,4 +1,12 @@
 export const sheetConfigs = [
+              {
+        key: "1SYOa2QB5Mit-U93_sgBzeI_NFsQlqbUG2afwUe70uDM",
+        name: "Name",
+        score: "Score",
+        email: "Email address",
+        totalMarks: 15,
+        quizName: "Class-17",
+    },
           {
         key: "1M_o0A3TIcF3WZ3M1nCv4xEpasXIZL9AgnRfHSu8fxKU",
         name: "Name:",
