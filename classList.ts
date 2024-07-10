@@ -5,7 +5,7 @@ export const links = [
     topic: "Introduction to Programming",
     quizLink:
       "https://docs.google.com/forms/d/e/1FAIpQLScsOt7o5Jkq9JH9Szq9GbDtj6xXhyyiLeWgCI7CDyv8RAgXTA/viewform?usp=sf_link",
-    youtubeLink: "https://www.youtube.com/live/lasjJly7J1I?si=WiTPKCSkkwYTU_q8",
+    youtubeLink: "https://youtu.be/SR-pO0PIigE?si=jXebdbstWagXTmHd",
     quizSolutionLink:
       "https://www.youtube.com/live/lasjJly7J1I?si=ngt3BLIpDuuEOz72",
     teacherLinkedIn: "https://www.linkedin.com/in/huzair-ahmed-khan-b95296248",
@@ -25,7 +25,7 @@ export const links = [
     teacherName: "Alishba Majeed",
     className: "Class 3",
     topic: "Let, Const and Operators",
-    quizLink: "Not available",
+    quizLink: "https://docs.google.com/forms/d/e/1FAIpQLSfh2nAvcdMwMdaI2AMRUGA4FzASoFwG4bG8QcnZXp7k61h8PA/viewform?usp=sf_link",
     youtubeLink: "https://www.youtube.com/live/poHnMZnDgno?si=QZe2ml2zCq_GvR66",
     quizSolutionLink:
       "https://www.youtube.com/live/OVvPB1Nwrp0?si=PCQiDk4CX_Qk2vfT",
