@@ -1,36 +1,62 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# User Quiz Performance Dashboard
 
-## Getting Started
+## Table of Contents
+- [Overview](#overview)
+- [Problem Statement](#problem-statement)
+- [Features](#features)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Technologies Used](#technologies-used)
+- [Contributing](#contributing)
+- [License](#license)
 
-First, run the development server:
+## Overview
+The User Quiz Performance Dashboard is a React component built with Next.js that allows users to view their quiz performance data. This project fetches user data, calculates their quiz score percentages, and displays the information in a clean and intuitive dashboard.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Problem Statement
+This project was created for my TypeScript learning community. Many members of the community were struggling to keep track of their quiz performance and overall progress. The User Quiz Performance Dashboard addresses this need by providing a centralized and user-friendly interface for viewing quiz scores and performance percentages.
+Community: GIAIC PREP Partners
+Purpose: Preparing students for GIAIC exams
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Features
+- Fetch user data from quiz responses.
+- Calculate and display the overall quiz performance percentage.
+- Display individual quiz scores in a tabular format.
+- Responsive design for different screen sizes.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Installation
+To get started with the project, follow these steps:
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+1. Clone the repository:
+    ```sh
+    git clone https://github.com/yourusername/user-quiz-dashboard.git
+    ```
+2. Navigate to the project directory:
+    ```sh
+    cd user-quiz-dashboard
+    ```
+3. Install the dependencies:
+    ```sh
+    npm install
+    ```
 
-## Learn More
+## Usage
+To run the project locally:
 
-To learn more about Next.js, take a look at the following resources:
+1. Start the development server:
+    ```sh
+    npm run dev
+    ```
+2. Open your browser and navigate to `http://localhost:3000`.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Technologies Used
+- [Next.js](https://nextjs.org/) - React framework for server-side rendering and static site generation.
+- [React](https://reactjs.org/) - JavaScript library for building user interfaces.
+- [Lucide](https://lucide.dev/) - Icon library for React.
+- [Vercel](https://vercel.com/) - Platform for frontend developers, providing serverless functions.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+## Contributing
+Contributions are welcome! Please open an issue or submit a pull request if you have any improvements or new features to add.
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+## License
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for more details.
