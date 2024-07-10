@@ -1,52 +1,58 @@
 @tailwind base;
-  @tailwind components;
-  @tailwind utilities;
+@tailwind components;
+@tailwind utilities;
 
-  @layer base {
-    :root {
-      /* Name: custom color palette
+@layer base {
+  :root {
+    /* Name: custom color palette
          Author: Ilias Ism
          URL: https://gradient.page */
-  
-      /* CSS: .bg-gradient { background: var(--gradient) } */
-      --gradient: #00c6ff;
-  
-      --background: 206 65% 4%;
-      --foreground: 206 10% 97.5%;
-  
-      --muted: 206 50% 15%;
-      --muted-foreground: 206 10% 55%;
-  
-      --popover: 206 45% 6.5%;
-      --popover-foreground: 206 10% 97.5%;
-  
-      --card: 206 45% 6.5%;
-      --card-foreground: 206 10% 97.5%;
-  
-      --border: 206 50% 15%;
-      --input: 206 50% 15%;
-  
-      --primary: 206 100% 50%;
-      --primary-foreground: 206 10% 5%;
-  
-      --secondary: 206 50% 15%;
-      --secondary-foreground: 206 10% 97.5%;
-  
-      --accent: 206 50% 15%;
-      --accent-foreground: 206 10% 97.5%;
-  
-      --destructive: 0 62.8% 30.6%;
-      --destructive-foreground: 206 10% 97.5%;
-  
-      --ring: 206 100% 50%;
-    }
-  }
 
-  @layer base {
-    * {
-      @apply border-border;
-    }
-    body {
-      @apply bg-background text-foreground;
-    }
+    /* CSS: .bg-gradient { background: var(--gradient) } */
+    --gradient: #00c6ff;
+
+    --background: 206 65% 4%;
+    --foreground: 206 10% 97.5%;
+
+    --muted: 206 50% 15%;
+    --muted-foreground: 206 10% 55%;
+
+    --popover: 206 45% 6.5%;
+    --popover-foreground: 206 10% 97.5%;
+
+    --card: 206 45% 6.5%;
+    --card-foreground: 206 10% 97.5%;
+
+    --border: 206 50% 15%;
+    --input: 206 50% 15%;
+
+    --primary: 206 100% 50%;
+    --primary-foreground: 206 10% 5%;
+
+    --secondary: 206 50% 15%;
+    --secondary-foreground: 206 10% 97.5%;
+
+    --accent: 206 50% 15%;
+    --accent-foreground: 206 10% 97.5%;
+
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 206 10% 97.5%;
+
+    --ring: 206 100% 50%;
   }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+.one-line {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
