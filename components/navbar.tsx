@@ -23,6 +23,9 @@ export default function NavBar() {
         <Link href="https://www.linkedin.com/in/growwithtalha-webdeveloper" className="text-sm font-medium hover:underline underline-offset-4" prefetch={false}>
           LinkedIn
         </Link>
+        <Link href="/resources" className="text-sm font-medium hover:underline underline-offset-4" prefetch={false}>
+          Resources
+        </Link>
       </nav>
     </header>
   )
